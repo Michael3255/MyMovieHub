@@ -1,0 +1,24 @@
+# Backend
+backend/venv/
+backend/__pycache__/
+backend/db.sqlite3
+backend/*.pyc
+backend/.env
+backend/mymoviehub/__pycache__/
+backend/movies/__pycache__/
+
+# Frontend
+frontend/node_modules/
+frontend/dist/
+frontend/.vite/
+frontend/build/
+
+# General
+.env
+.env.local
+.DS_Store
+*.log
+__pycache__/
+*.pyc
+.vscode/
+.idea/
