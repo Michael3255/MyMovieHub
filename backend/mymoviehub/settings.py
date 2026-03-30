@@ -11,10 +11,16 @@ https://docs.djangoproject.com/en/6.0/ref/settings/
 """
 
 from pathlib import Path
+from dotenv import load_dotenv
+import os
+
+load_dotenv()
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
+# TMDB API Configuration
+TMDB_API_KEY = os.getenv("TMDB_API_KEY")
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/6.0/howto/deployment/checklist/
@@ -40,6 +46,8 @@ INSTALLED_APPS = [
     'rest_framework',
     'corsheaders',
     'movies',  # movies app
+    'user_movies', # user movies app
+    'auth_api',
 ]
 
 MIDDLEWARE = [
