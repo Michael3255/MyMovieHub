@@ -17,8 +17,6 @@ def search_movies(request):
 
     api_key = os.getenv('TMDB_API_KEY')
 
-    print('API KEY IS:', api_key)
-
     url = 'https://api.themoviedb.org/3/search/movie'
 
     params = {
@@ -29,9 +27,6 @@ def search_movies(request):
     }
 
     tmdb_response = requests.get(url, params=params)
-
-    print('TMDB STATUS CODE:', tmdb_response.status_code)
-    print('TMDB RAW RESPONSE:', tmdb_response.json())
 
     data = tmdb_response.json()
 
