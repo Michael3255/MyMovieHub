@@ -7,6 +7,17 @@ import Dashboard from "./pages/Dashboard";
 import MovieDetails from "./pages/MovieDetails";
 import AddMovie from "./pages/AddMovie";
 
+function ProtectedRoute({ children }) {
+  const { token } = useContext(AuthContext);
+
+  if (!token) {
+    return <Navigate to="/" />;
+  }
+
+  return children;
+}
+
+
 function App() {
   return (
     <BrowserRouter>
