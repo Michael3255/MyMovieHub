@@ -1,13 +1,15 @@
-
-# Create your views here.
 import os
-import requests # to pull third party apis
-from rest_framework.decorators import api_view
+import requests
+from rest_framework.decorators import api_view, permission_classes
+from rest_framework.permissions import IsAuthenticated
 from rest_framework.response import Response
+from .models import Movie
+from .serializers import MovieSerializer
 
-# I definitely used AI here because I wasn't sure where to start with the tMDB api
 
+# Calls the TMDB API with a search query and returns a formatted list of movies
 @api_view(['GET'])
+@permission_classes([IsAuthenticated])
 def search_movies(request):
 
     query = request.query_params.get('query', '')
@@ -26,8 +28,8 @@ def search_movies(request):
         'page': 1
     }
 
+    # I definitely used AI here because I wasn't sure where to start with the TMDB api
     tmdb_response = requests.get(url, params=params)
-
     data = tmdb_response.json()
 
     results = []
@@ -35,14 +37,12 @@ def search_movies(request):
     for item in data.get('results', []):
 
         poster_path = item.get('poster_path')
-
         if poster_path:
             poster_url = 'https://image.tmdb.org/t/p/w500' + poster_path
         else:
             poster_url = None
 
         release_date = item.get('release_date', '')
-
         if release_date:
             release_year = release_date[:4]
         else:
@@ -60,3 +60,35 @@ def search_movies(request):
         results.append(movie)
 
     return Response({'results': results})
+
+
+# Saves a movie from TMDB into our database
+# If the movie already exists, returns it instead of creating a duplicate
+@api_view(['POST'])
+@permission_classes([IsAuthenticated])
+def save_movie(request):
+
+    tmdb_id = request.data.get('tmdb_id')
+    title = request.data.get('title')
+    release_year = request.data.get('release_year')
+    description = request.data.get('description')
+    poster_url = request.data.get('poster_url')
+    genres = request.data.get('genres', [])
+
+    existing_movie = Movie.objects.filter(tmdb_id=tmdb_id).first()
+
+    if existing_movie:
+        serializer = MovieSerializer(existing_movie)
+        return Response(serializer.data)
+
+    movie = Movie.objects.create(
+        tmdb_id=tmdb_id,
+        title=title,
+        release_year=release_year,
+        description=description,
+        poster_url=poster_url,
+        genres=genres,
+    )
+
+    serializer = MovieSerializer(movie)
+    return Response(serializer.data)
