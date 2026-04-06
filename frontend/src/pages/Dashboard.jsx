@@ -3,9 +3,11 @@ import { AuthContext } from "../context/authContext";
 
 export default function Dashboard() {
   const [userMovies, setUserMovies] = useState([]);
+  const [recommendations, setRecommendations] = useState([]);
+  const [recsMessage, setRecsMessage] = useState("");
   const { token } = useContext(AuthContext);
 
-  // When the page loads it fetches the user's movies.
+  // Fetches the user's movie list from the backend when the page loads
   useEffect(() => {
     fetchUserMovies();
   }, []);
@@ -13,12 +15,31 @@ export default function Dashboard() {
   async function fetchUserMovies() {
     const response = await fetch("http://127.0.0.1:8000/user-movies/", {
       headers: {
-        "Authorization": "Token " + token,
+        Authorization: "Token " + token,
       },
     });
 
     const data = await response.json();
     setUserMovies(data);
+  }
+
+  // Fetches movie recommendations from TasteDive based on the user's highest rated movie
+  async function fetchRecommendations() {
+    const response = await fetch("http://127.0.0.1:8000/movies/recommendations/", {
+      headers: {
+        Authorization: "Token " + token,
+      },
+    });
+
+    const data = await response.json();
+
+    if (data.error) {
+      setRecsMessage(data.error);
+      setRecommendations([]);
+    } else {
+      setRecsMessage("Based on your love of " + data.based_on + ":");
+      setRecommendations(data.recommendations);
+    }
   }
 
   // Sends updated status and rating to the backend, then refreshes the list
@@ -50,9 +71,8 @@ export default function Dashboard() {
     fetchUserMovies();
   }
 
-
   return (
-    <div>
+    <div style={styles.container}>
       <h1>My Movie List</h1>
 
       {userMovies.length === 0 ? (
@@ -76,7 +96,6 @@ export default function Dashboard() {
                 </a>
                 <p>{userMovie.movie.release_year}</p>
 
-                {/* Status dropdown */}
                 <select
                   value={userMovie.status}
                   onChange={(e) =>
@@ -88,7 +107,6 @@ export default function Dashboard() {
                   <option value="watched">Watched</option>
                 </select>
 
-                {/* Rating dropdown */}
                 <select
                   value={userMovie.rating || ""}
                   onChange={(e) =>
@@ -115,11 +133,35 @@ export default function Dashboard() {
           ))}
         </ul>
       )}
+
+      {/* Recommendations Section */}
+      <div style={styles.recsSection}>
+        <h2>Movie Recommendations</h2>
+        <button style={styles.recsButton} onClick={fetchRecommendations}>
+          Get Recommendations
+        </button>
+
+        {recsMessage && <p>{recsMessage}</p>}
+
+        {recommendations.length > 0 && (
+          <ul style={styles.recsList}>
+            {recommendations.map((rec, index) => (
+              <li key={index} style={styles.recItem}>
+                {rec.title}
+              </li>
+            ))}
+          </ul>
+        )}
+      </div>
+
     </div>
   );
 }
 
 const styles = {
+  container: {
+    padding: "30px",
+  },
   list: {
     listStyle: "none",
     padding: 0,
@@ -141,6 +183,10 @@ const styles = {
     flexDirection: "column",
     gap: "8px",
   },
+  titleLink: {
+    textDecoration: "none",
+    color: "inherit",
+  },
   deleteButton: {
     background: "red",
     color: "white",
@@ -150,8 +196,28 @@ const styles = {
     borderRadius: "4px",
     width: "fit-content",
   },
-  titleLink: {
-  textDecoration: "none",
-  color: "inherit",
+  recsSection: {
+    marginTop: "40px",
+    borderTop: "2px solid #ccc",
+    paddingTop: "20px",
+  },
+  recsButton: {
+    background: "#222",
+    color: "white",
+    border: "none",
+    padding: "10px 20px",
+    cursor: "pointer",
+    borderRadius: "4px",
+    fontSize: "16px",
+    marginBottom: "15px",
+  },
+  recsList: {
+    listStyle: "none",
+    padding: 0,
+  },
+  recItem: {
+    padding: "10px 0",
+    borderBottom: "1px solid #eee",
+    fontSize: "18px",
   },
 };
