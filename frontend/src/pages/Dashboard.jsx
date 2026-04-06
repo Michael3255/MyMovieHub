@@ -71,7 +71,9 @@ export default function Dashboard() {
               )}
 
               <div style={styles.info}>
-                <h3>{userMovie.movie.title}</h3>
+                <a href={"/movie/" + userMovie.id} style={styles.titleLink}>
+                  <h3>{userMovie.movie.title}</h3>
+                </a>
                 <p>{userMovie.movie.release_year}</p>
 
                 {/* Status dropdown */}
@@ -147,5 +149,9 @@ const styles = {
     cursor: "pointer",
     borderRadius: "4px",
     width: "fit-content",
+  },
+  titleLink: {
+  textDecoration: "none",
+  color: "inherit",
   },
 };

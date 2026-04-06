@@ -61,3 +61,11 @@ def delete_user_movie(request, pk):
     user_movie = UserMovie.objects.get(id=pk, user=request.user)
     user_movie.delete()
     return Response({'message': 'Deleted successfully.'})
+
+# Returns the details of a single UserMovie record
+@api_view(['GET'])
+@permission_classes([IsAuthenticated])
+def get_user_movie(request, pk):
+    user_movie = UserMovie.objects.get(id=pk, user=request.user)
+    serializer = UserMovieSerializer(user_movie)
+    return Response(serializer.data)
