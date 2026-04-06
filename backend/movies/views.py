@@ -28,7 +28,6 @@ def search_movies(request):
         'page': 1
     }
 
-    # I definitely used AI here because I wasn't sure where to start with the TMDB api
     tmdb_response = requests.get(url, params=params)
     data = tmdb_response.json()
 
@@ -92,3 +91,51 @@ def save_movie(request):
 
     serializer = MovieSerializer(movie)
     return Response(serializer.data)
+
+# Gets movie recommendations from TasteDive based on the user's highest rated movie
+@api_view(['GET'])
+@permission_classes([IsAuthenticated])
+def get_recommendations(request):
+
+    from user_movies.models import UserMovie
+
+    # Get the user's highest rated watched movie
+    user_movies = UserMovie.objects.filter(
+        user=request.user,
+        status='watched'
+    ).order_by('-rating')
+
+    if not user_movies:
+        return Response({'error': 'You need to have watched and rated at least one movie to get recommendations.'})
+
+    top_movie = user_movies[0]
+    movie_title = top_movie.movie.title
+
+    # Call the TasteDive API with that movie title
+    api_key = os.getenv('TASTEDIVE_API_KEY')
+
+    url = 'https://tastedive.com/api/similar'
+
+    params = {
+        'q': movie_title,
+        'type': 'movie',
+        'limit': 5,
+        'k': api_key,
+    }
+
+    tastedive_response = requests.get(url, params=params)
+    data = tastedive_response.json()
+
+    # Format the results and send them back
+    recommendations = []
+
+    for item in data.get('similar', {}).get('results', []):
+        recommendations.append({
+            'title': item.get('name'),
+            'type': item.get('type'),
+        })
+
+    return Response({
+        'based_on': movie_title,
+        'recommendations': recommendations,
+    })

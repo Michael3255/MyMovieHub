@@ -19,8 +19,11 @@ load_dotenv()
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
-# TMDB API Configuration
+# TMDB API Config
 TMDB_API_KEY = os.getenv("TMDB_API_KEY")
+
+# TASTE DIVE API Config
+TASTEDIVE_API_KEY = os.getenv("TASTEDIVE_API_KEY")
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/6.0/howto/deployment/checklist/
