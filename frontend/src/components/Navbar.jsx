@@ -10,7 +10,7 @@ export default function Navbar() {
     const response = await fetch("http://127.0.0.1:8000/auth/logout/", {
       method: "POST",
       headers: {
-        "Authorization": "Token " + token,
+        Authorization: "Token " + token,
       },
     });
 
@@ -22,18 +22,23 @@ export default function Navbar() {
 
   return (
     <nav style={styles.nav}>
-      <h2 style={styles.logo}>MyMovieHub</h2>
-      <div>
+      <Link to="/dashboard" style={styles.logo}>
+        MY<span style={styles.logoAccent}>MOVIE</span>HUB
+      </Link>
+
+      <div style={styles.links}>
         {token ? (
           <>
-            <Link style={styles.link} to="/dashboard">Dashboard</Link>
-            <Link style={styles.link} to="/add">Add Movie</Link>
-            <button style={styles.button} onClick={handleLogout}>Logout</button>
+            <Link to="/dashboard" style={styles.link}>My List</Link>
+            <Link to="/add" style={styles.link}>Search</Link>
+            <button style={styles.logoutButton} onClick={handleLogout}>
+              Logout
+            </button>
           </>
         ) : (
           <>
-            <Link style={styles.link} to="/">Login</Link>
-            <Link style={styles.link} to="/register">Register</Link>
+            <Link to="/" style={styles.link}>Login</Link>
+            <Link to="/register" style={styles.registerButton}>Register</Link>
           </>
         )}
       </div>
@@ -41,31 +46,66 @@ export default function Navbar() {
   );
 }
 
-
 const styles = {
   nav: {
     display: "flex",
     justifyContent: "space-between",
-    padding: "15px 30px",
-    background: "#222",
-    color: "#fff",
     alignItems: "center",
+    padding: "0 40px",
+    height: "68px",
+    background: "rgba(5, 5, 26, 0.85)",
+    backdropFilter: "blur(20px)",
+    borderBottom: "1px solid rgba(123, 47, 255, 0.3)",
+    position: "sticky",
+    top: 0,
+    zIndex: 100,
+    boxShadow: "0 4px 30px rgba(123, 47, 255, 0.15)",
   },
-  logo: { margin: 0 },
-  link: {
-    color: "#fff",
-    marginLeft: "15px",
+  logo: {
+    fontFamily: "'Bebas Neue', sans-serif",
+    fontSize: "1.8rem",
+    letterSpacing: "4px",
+    color: "#ffffff",
     textDecoration: "none",
-    fontSize: "16px",
   },
-    button: {
-    marginLeft: "15px",
-    background: "none",
-    border: "1px solid #fff",
-    color: "#fff",
-    fontSize: "16px",
+  logoAccent: {
+    color: "#7b2fff",
+    textShadow: "0 0 20px rgba(123, 47, 255, 0.8)",
+  },
+  links: {
+    display: "flex",
+    alignItems: "center",
+    gap: "32px",
+  },
+  link: {
+    color: "#a0a8cc",
+    textDecoration: "none",
+    fontSize: "15px",
+    fontWeight: "500",
+    letterSpacing: "0.5px",
+    transition: "color 0.3s ease",
+  },
+  logoutButton: {
+    background: "transparent",
+    border: "1px solid #7b2fff",
+    color: "#7b2fff",
+    padding: "8px 20px",
+    borderRadius: "6px",
+    fontSize: "14px",
+    fontWeight: "600",
+    letterSpacing: "1px",
     cursor: "pointer",
-    padding: "4px 10px",
-    borderRadius: "4px",
+    boxShadow: "0 0 10px rgba(123, 47, 255, 0.3)",
+  },
+  registerButton: {
+    background: "linear-gradient(135deg, #7b2fff, #ff2d7a)",
+    color: "white",
+    padding: "8px 20px",
+    borderRadius: "6px",
+    fontSize: "14px",
+    fontWeight: "600",
+    letterSpacing: "1px",
+    textDecoration: "none",
+    boxShadow: "0 0 15px rgba(123, 47, 255, 0.4)",
   },
 };

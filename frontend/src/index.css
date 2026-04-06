@@ -1,3 +1,32 @@
+@import url('https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;0,9..40,600;1,9..40,300&display=swap');
+
+/* =====================
+   CSS VARIABLES
+   ===================== */
+:root {
+  --bg-primary: #05051a;
+  --bg-secondary: #0a0a2e;
+  --bg-card: #0d0d35;
+  --bg-hover: #12124a;
+
+  --accent-primary: #7b2fff;
+  --accent-secondary: #00d4ff;
+  --accent-pink: #ff2d7a;
+  --accent-glow: rgba(123, 47, 255, 0.4);
+  --accent-glow-blue: rgba(0, 212, 255, 0.3);
+
+  --text-primary: #ffffff;
+  --text-secondary: #a0a8cc;
+  --text-muted: #505080;
+
+  --border-color: #1e1e5a;
+  --card-shadow: 0 8px 32px rgba(0, 0, 0, 0.8);
+  --transition: all 0.3s ease;
+}
+
+/* =====================
+   RESET AND BASE
+   ===================== */
 *, *::before, *::after {
   box-sizing: border-box;
   margin: 0;
@@ -6,12 +35,296 @@
 
 body {
   font-family: 'DM Sans', sans-serif;
-  background: #0d0d0f;
-  color: #f0eee8;
+  background: var(--bg-primary);
+  color: var(--text-primary);
   min-height: 100vh;
+  overflow-x: hidden;
+}
+
+/* =====================
+   ANIMATED GALAXY BACKGROUND
+   ===================== */
+body::before {
+  content: '';
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background:
+    radial-gradient(ellipse at 20% 50%, rgba(123, 47, 255, 0.15) 0%, transparent 50%),
+    radial-gradient(ellipse at 80% 20%, rgba(0, 212, 255, 0.1) 0%, transparent 50%),
+    radial-gradient(ellipse at 50% 80%, rgba(255, 45, 122, 0.08) 0%, transparent 50%);
+  pointer-events: none;
+  z-index: 0;
+  animation: galaxyShift 12s ease-in-out infinite alternate;
+}
+
+body::after {
+  content: '';
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-image:
+    radial-gradient(1px 1px at 10% 15%, rgba(255,255,255,0.8) 0%, transparent 100%),
+    radial-gradient(1px 1px at 25% 40%, rgba(255,255,255,0.6) 0%, transparent 100%),
+    radial-gradient(1px 1px at 40% 10%, rgba(255,255,255,0.9) 0%, transparent 100%),
+    radial-gradient(1px 1px at 55% 60%, rgba(255,255,255,0.5) 0%, transparent 100%),
+    radial-gradient(1px 1px at 70% 25%, rgba(255,255,255,0.7) 0%, transparent 100%),
+    radial-gradient(1px 1px at 85% 75%, rgba(255,255,255,0.8) 0%, transparent 100%),
+    radial-gradient(1px 1px at 15% 80%, rgba(255,255,255,0.6) 0%, transparent 100%),
+    radial-gradient(1px 1px at 90% 45%, rgba(255,255,255,0.9) 0%, transparent 100%),
+    radial-gradient(1px 1px at 35% 90%, rgba(255,255,255,0.5) 0%, transparent 100%),
+    radial-gradient(1px 1px at 60% 85%, rgba(255,255,255,0.7) 0%, transparent 100%),
+    radial-gradient(1px 1px at 75% 5%, rgba(255,255,255,0.8) 0%, transparent 100%),
+    radial-gradient(1px 1px at 5% 55%, rgba(255,255,255,0.6) 0%, transparent 100%),
+    radial-gradient(1.5px 1.5px at 45% 35%, rgba(180,180,255,0.9) 0%, transparent 100%),
+    radial-gradient(1.5px 1.5px at 20% 65%, rgba(180,180,255,0.7) 0%, transparent 100%),
+    radial-gradient(1.5px 1.5px at 65% 50%, rgba(180,180,255,0.8) 0%, transparent 100%),
+    radial-gradient(2px 2px at 30% 20%, rgba(200,180,255,1) 0%, transparent 100%),
+    radial-gradient(2px 2px at 80% 60%, rgba(200,180,255,0.9) 0%, transparent 100%),
+    radial-gradient(2px 2px at 50% 95%, rgba(200,180,255,0.8) 0%, transparent 100%);
+  pointer-events: none;
+  z-index: 0;
+  animation: starTwinkle 6s ease-in-out infinite alternate;
+}
+
+@keyframes galaxyShift {
+  0% { opacity: 0.8; transform: scale(1); }
+  100% { opacity: 1; transform: scale(1.05); }
+}
+
+@keyframes starTwinkle {
+  0% { opacity: 0.6; }
+  50% { opacity: 1; }
+  100% { opacity: 0.7; }
+}
+
+/* =====================
+   MAKE SURE CONTENT SITS ABOVE BACKGROUND
+   ===================== */
+#root {
+  position: relative;
+  z-index: 1;
 }
 
 a {
   text-decoration: none;
   color: inherit;
+}
+
+/* =====================
+   SCROLLBAR
+   ===================== */
+::-webkit-scrollbar {
+  width: 6px;
+}
+
+::-webkit-scrollbar-track {
+  background: var(--bg-primary);
+}
+
+::-webkit-scrollbar-thumb {
+  background: linear-gradient(var(--accent-primary), var(--accent-secondary));
+  border-radius: 3px;
+}
+
+/* =====================
+   TEXT SELECTION
+   ===================== */
+::selection {
+  background: var(--accent-primary);
+  color: white;
+}
+
+/* =====================
+   GLOBAL BUTTON STYLES
+   ===================== */
+button {
+  font-family: 'DM Sans', sans-serif;
+  cursor: pointer;
+  border: none;
+  transition: var(--transition);
+}
+
+button:hover {
+  opacity: 0.85;
+  transform: translateY(-2px);
+}
+
+/* =====================
+   GLOBAL INPUT AND SELECT STYLES
+   ===================== */
+input, textarea, select {
+  font-family: 'DM Sans', sans-serif;
+  background: var(--bg-secondary);
+  color: var(--text-primary);
+  border: 1px solid var(--border-color);
+  border-radius: 8px;
+  padding: 10px 14px;
+  font-size: 15px;
+  outline: none;
+  transition: var(--transition);
+}
+
+input:focus, textarea:focus, select:focus {
+  border-color: var(--accent-primary);
+  box-shadow: 0 0 0 3px var(--accent-glow);
+}
+
+/* =====================
+   UTILITY CLASSES
+   ===================== */
+.page-container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 40px 30px;
+}
+
+.section-title {
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: 2.2rem;
+  letter-spacing: 3px;
+  background: linear-gradient(135deg, #ffffff, var(--accent-secondary));
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  margin-bottom: 24px;
+}
+
+.glow-card {
+  background: var(--bg-card);
+  border: 1px solid var(--border-color);
+  border-radius: 12px;
+  transition: var(--transition);
+}
+
+.glow-card:hover {
+  border-color: var(--accent-primary);
+  box-shadow: 0 0 20px var(--accent-glow), var(--card-shadow);
+  transform: translateY(-4px);
+}
+
+.btn-primary {
+  background: linear-gradient(135deg, var(--accent-primary), var(--accent-pink));
+  color: white;
+  padding: 12px 28px;
+  border-radius: 8px;
+  font-size: 15px;
+  font-weight: 600;
+  letter-spacing: 1px;
+  border: none;
+  cursor: pointer;
+  transition: var(--transition);
+  box-shadow: 0 4px 20px var(--accent-glow);
+}
+
+.btn-primary:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 30px var(--accent-glow);
+}
+
+.btn-secondary {
+  background: transparent;
+  color: var(--accent-secondary);
+  padding: 10px 24px;
+  border-radius: 8px;
+  font-size: 15px;
+  font-weight: 600;
+  letter-spacing: 1px;
+  border: 1px solid var(--accent-secondary);
+  cursor: pointer;
+  transition: var(--transition);
+}
+
+.btn-secondary:hover {
+  background: var(--accent-glow-blue);
+  transform: translateY(-2px);
+}
+
+.badge {
+  display: inline-block;
+  padding: 4px 12px;
+  border-radius: 20px;
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 1.5px;
+  text-transform: uppercase;
+}
+
+.badge-watched {
+  background: rgba(0, 212, 255, 0.15);
+  color: var(--accent-secondary);
+  border: 1px solid var(--accent-secondary);
+}
+
+.badge-watching {
+  background: rgba(123, 47, 255, 0.15);
+  color: var(--accent-primary);
+  border: 1px solid var(--accent-primary);
+}
+
+.badge-want {
+  background: rgba(255, 45, 122, 0.15);
+  color: var(--accent-pink);
+  border: 1px solid var(--accent-pink);
+}
+
+/* =====================
+   ANIMATIONS
+   ===================== */
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(30px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+@keyframes pulse {
+  0%, 100% { box-shadow: 0 0 10px var(--accent-glow); }
+  50% { box-shadow: 0 0 30px var(--accent-glow), 0 0 60px var(--accent-glow); }
+}
+
+@keyframes shimmer {
+  0% { background-position: -1000px 0; }
+  100% { background-position: 1000px 0; }
+}
+
+.animate-fadeInUp {
+  animation: fadeInUp 0.6s ease forwards;
+}
+
+.animate-fadeIn {
+  animation: fadeIn 0.4s ease forwards;
+}
+
+.animate-pulse {
+  animation: pulse 2s ease-in-out infinite;
+}
+
+/* =====================
+   SKELETON LOADING
+   Shows a shimmer effect while content is loading
+   ===================== */
+.skeleton {
+  background: linear-gradient(
+    90deg,
+    var(--bg-card) 25%,
+    var(--bg-hover) 50%,
+    var(--bg-card) 75%
+  );
+  background-size: 1000px 100%;
+  animation: shimmer 2s infinite;
+  border-radius: 8px;
 }
