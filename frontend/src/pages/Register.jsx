@@ -1,18 +1,21 @@
 import { useState, useContext } from "react";
 import { useNavigate } from "react-router-dom";
 import { AuthContext } from "../context/authContext";
+import styles from "./Register.module.css";
 
 export default function Register() {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const [email, setEmail] = useState("");
   const [error, setError] = useState("");
+  const [loading, setLoading] = useState(false);
 
   const { login } = useContext(AuthContext);
   const navigate = useNavigate();
 
   async function handleSubmit(e) {
     e.preventDefault();
+    setLoading(true);
 
     const response = await fetch("http://127.0.0.1:8000/auth/register/", {
       method: "POST",
@@ -29,47 +32,99 @@ export default function Register() {
       navigate("/dashboard");
     } else {
       setError(data.error);
+      setLoading(false);
     }
   }
 
   return (
-    <div>
-      <h1>Register</h1>
+    <div className={styles.page}>
 
-      {error && <p style={{ color: "red" }}>{error}</p>}
+      <div className={styles.orb1} />
+      <div className={styles.orb2} />
+      <div className={styles.orb3} />
 
-      <form onSubmit={handleSubmit}>
-        <div>
-          <label>Username</label>
-          <input
-            type="text"
-            value={username}
-            onChange={(e) => setUsername(e.target.value)}
-          />
+      <div className={styles.card}>
+
+        <div className={styles.logoContainer}>
+          <h1 className={styles.logo}>
+            MY<span className={styles.logoAccent}>MOVIE</span>HUB
+          </h1>
+          <p className={styles.tagline}>Your personal cinema universe</p>
         </div>
 
-        <div>
-          <label>Email</label>
-          <input
-            type="email"
-            value={email}
-            onChange={(e) => setEmail(e.target.value)}
-          />
-        </div>
+        <div className={styles.divider} />
 
-        <div>
-          <label>Password</label>
-          <input
-            type="password"
-            value={password}
-            onChange={(e) => setPassword(e.target.value)}
-          />
-        </div>
+        <h2 className={styles.title}>Create Account</h2>
+        <p className={styles.subtitle}>Join the universe today</p>
 
-        <button type="submit">Register</button>
-      </form>
+        {error && (
+          <div className={styles.errorBox}>
+            ⚠️ {error}
+          </div>
+        )}
 
-      <p>Already have an account? <a href="/">Login here</a></p>
+        <form onSubmit={handleSubmit} className={styles.form}>
+
+          <div className={styles.inputGroup}>
+            <label className={styles.label}>Username</label>
+            <div className={styles.inputWrapper}>
+              <span className={styles.inputIcon}>👤</span>
+              <input
+                className={styles.input}
+                type="text"
+                placeholder="Choose a username"
+                value={username}
+                onChange={(e) => setUsername(e.target.value)}
+              />
+            </div>
+          </div>
+
+          <div className={styles.inputGroup}>
+            <label className={styles.label}>Email</label>
+            <div className={styles.inputWrapper}>
+              <span className={styles.inputIcon}>✉️</span>
+              <input
+                className={styles.input}
+                type="email"
+                placeholder="Enter your email"
+                value={email}
+                onChange={(e) => setEmail(e.target.value)}
+              />
+            </div>
+          </div>
+
+          <div className={styles.inputGroup}>
+            <label className={styles.label}>Password</label>
+            <div className={styles.inputWrapper}>
+              <span className={styles.inputIcon}>🔒</span>
+              <input
+                className={styles.input}
+                type="password"
+                placeholder="Choose a password"
+                value={password}
+                onChange={(e) => setPassword(e.target.value)}
+              />
+            </div>
+          </div>
+
+          <button
+            type="submit"
+            className={loading ? styles.buttonLoading : styles.button}
+            disabled={loading}
+          >
+            {loading ? "Creating account..." : "Create Account"}
+          </button>
+
+        </form>
+
+        <p className={styles.loginText}>
+          Already have an account?{" "}
+          <a href="/" className={styles.loginLink}>
+            Sign in here
+          </a>
+        </p>
+
+      </div>
     </div>
   );
 }
