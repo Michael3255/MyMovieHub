@@ -1,4 +1,6 @@
-import { BrowserRouter, Routes, Route } from "react-router-dom";
+import { useContext } from "react";
+import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
+import { AuthContext } from "./context/authContext";
 import Navbar from "./components/Navbar";
 
 import Login from "./pages/Login";
@@ -7,6 +9,7 @@ import Dashboard from "./pages/Dashboard";
 import MovieDetails from "./pages/MovieDetails";
 import AddMovie from "./pages/AddMovie";
 
+// Redirects unauthenticated users to the login page
 function ProtectedRoute({ children }) {
   const { token } = useContext(AuthContext);
 
@@ -17,7 +20,6 @@ function ProtectedRoute({ children }) {
   return children;
 }
 
-
 function App() {
   return (
     <BrowserRouter>
@@ -26,9 +28,9 @@ function App() {
       <Routes>
         <Route path="/" element={<Login />} />
         <Route path="/register" element={<Register />} />
-        <Route path="/dashboard" element={<Dashboard />} />
-        <Route path="/movie/:id" element={<MovieDetails />} />
-        <Route path="/add" element={<AddMovie />} />
+        <Route path="/dashboard" element={<ProtectedRoute><Dashboard /></ProtectedRoute>} />
+        <Route path="/movie/:id" element={<ProtectedRoute><MovieDetails /></ProtectedRoute>} />
+        <Route path="/add" element={<ProtectedRoute><AddMovie /></ProtectedRoute>} />
       </Routes>
     </BrowserRouter>
   );

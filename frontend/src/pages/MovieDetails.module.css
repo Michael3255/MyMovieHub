@@ -1,0 +1,370 @@
+/* =====================
+   PAGE LAYOUT
+   ===================== */
+.page {
+  min-height: 100vh;
+  padding: 40px 20px 80px;
+  position: relative;
+  overflow-x: hidden;
+}
+
+.loadingPage {
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.loadingText {
+  color: #a0a8cc;
+  font-size: 18px;
+  letter-spacing: 2px;
+}
+
+/* =====================
+   BACKGROUND ORBS
+   ===================== */
+.orb1 {
+  position: fixed;
+  width: 500px;
+  height: 500px;
+  border-radius: 50%;
+  background: radial-gradient(circle, rgba(123, 47, 255, 0.15) 0%, transparent 70%);
+  top: -100px;
+  left: -100px;
+  animation: pulse 8s ease-in-out infinite;
+  pointer-events: none;
+}
+
+.orb2 {
+  position: fixed;
+  width: 350px;
+  height: 350px;
+  border-radius: 50%;
+  background: radial-gradient(circle, rgba(0, 212, 255, 0.1) 0%, transparent 70%);
+  bottom: -50px;
+  right: -50px;
+  animation: pulse 12s ease-in-out infinite;
+  pointer-events: none;
+}
+
+/* =====================
+   CONTAINER
+   ===================== */
+.container {
+  max-width: 1000px;
+  margin: 0 auto;
+  position: relative;
+  z-index: 1;
+}
+
+/* =====================
+   BACK BUTTON
+   ===================== */
+.backButton {
+  background: transparent;
+  color: #a0a8cc;
+  border: 1px solid rgba(30, 30, 90, 0.8);
+  padding: 8px 18px;
+  border-radius: 8px;
+  font-size: 14px;
+  font-weight: 500;
+  cursor: pointer;
+  margin-bottom: 36px;
+  transition: all 0.3s ease;
+}
+
+.backButton:hover {
+  color: #ffffff;
+  border-color: rgba(123, 47, 255, 0.5);
+  background: rgba(123, 47, 255, 0.1);
+  transform: translateX(-2px);
+}
+
+/* =====================
+   HERO SECTION
+   ===================== */
+.hero {
+  display: flex;
+  gap: 40px;
+  margin-bottom: 48px;
+  animation: fadeInUp 0.5s ease forwards;
+}
+
+/* =====================
+   POSTER
+   ===================== */
+.posterWrapper {
+  flex-shrink: 0;
+}
+
+.poster {
+  width: 240px;
+  height: 360px;
+  object-fit: cover;
+  border-radius: 12px;
+  box-shadow: 0 8px 40px rgba(0, 0, 0, 0.7), 0 0 30px rgba(123, 47, 255, 0.2);
+}
+
+.posterPlaceholder {
+  width: 240px;
+  height: 360px;
+  border-radius: 12px;
+  background: rgba(13, 13, 53, 0.9);
+  border: 1px solid rgba(30, 30, 90, 0.8);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 48px;
+  opacity: 0.5;
+}
+
+/* =====================
+   MOVIE INFO
+   ===================== */
+.info {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  flex: 1;
+}
+
+.movieTitle {
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: 2.8rem;
+  letter-spacing: 3px;
+  color: #ffffff;
+  line-height: 1.1;
+}
+
+.year {
+  display: inline-block;
+  background: rgba(0, 212, 255, 0.1);
+  color: #00d4ff;
+  border: 1px solid rgba(0, 212, 255, 0.3);
+  border-radius: 20px;
+  padding: 3px 12px;
+  font-size: 13px;
+  font-weight: 600;
+  letter-spacing: 1px;
+  width: fit-content;
+}
+
+.description {
+  color: #a0a8cc;
+  font-size: 15px;
+  line-height: 1.7;
+}
+
+.divider {
+  height: 1px;
+  background: linear-gradient(90deg, rgba(123, 47, 255, 0.4), transparent);
+}
+
+/* =====================
+   STATUS + RATING FIELDS
+   ===================== */
+.fieldGroup {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.fieldLabel {
+  color: #a0a8cc;
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+}
+
+.statusButtons {
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+
+.statusButton {
+  padding: 7px 16px;
+  background: transparent;
+  color: #a0a8cc;
+  border: 1px solid rgba(30, 30, 90, 0.8);
+  border-radius: 20px;
+  font-size: 13px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.statusButton:hover {
+  border-color: rgba(123, 47, 255, 0.5);
+  color: #ffffff;
+}
+
+.statusButtonActive {
+  padding: 7px 16px;
+  background: rgba(123, 47, 255, 0.2);
+  color: #7b2fff;
+  border: 1px solid rgba(123, 47, 255, 0.6);
+  border-radius: 20px;
+  font-size: 13px;
+  font-weight: 600;
+  cursor: pointer;
+  box-shadow: 0 0 12px rgba(123, 47, 255, 0.2);
+  transition: all 0.3s ease;
+}
+
+.ratingText {
+  color: #f5c518;
+  font-size: 13px;
+  font-weight: 500;
+}
+
+/* =====================
+   TRAILER SECTION
+   ===================== */
+.trailerSection {
+  margin-bottom: 48px;
+  animation: fadeInUp 0.5s ease 0.1s both;
+}
+
+.sectionTitle {
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: 1.6rem;
+  letter-spacing: 3px;
+  color: #ffffff;
+  margin-bottom: 20px;
+}
+
+/* 16:9 responsive container */
+.trailerWrapper {
+  position: relative;
+  width: 100%;
+  padding-top: 56.25%;
+  border-radius: 12px;
+  overflow: hidden;
+  box-shadow: 0 8px 40px rgba(0, 0, 0, 0.6);
+}
+
+.trailer {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  border: none;
+}
+
+/* =====================
+   NOTES SECTION
+   ===================== */
+.notesSection {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+  animation: fadeInUp 0.5s ease 0.2s both;
+}
+
+.textarea {
+  width: 100%;
+  padding: 16px;
+  background: rgba(13, 13, 53, 0.85);
+  border: 1px solid rgba(30, 30, 90, 0.8);
+  border-radius: 10px;
+  color: #ffffff;
+  font-size: 15px;
+  line-height: 1.6;
+  resize: vertical;
+  outline: none;
+  transition: all 0.3s ease;
+  backdrop-filter: blur(10px);
+}
+
+.textarea:focus {
+  border-color: #7b2fff;
+  box-shadow: 0 0 0 3px rgba(123, 47, 255, 0.2);
+}
+
+.textarea::placeholder {
+  color: #505080;
+}
+
+.notesFooter {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+}
+
+.saveButton {
+  padding: 10px 24px;
+  background: linear-gradient(135deg, #7b2fff, #ff2d7a);
+  color: white;
+  border: none;
+  border-radius: 8px;
+  font-size: 14px;
+  font-weight: 600;
+  letter-spacing: 1px;
+  cursor: pointer;
+  box-shadow: 0 4px 16px rgba(123, 47, 255, 0.3);
+  transition: all 0.3s ease;
+}
+
+.saveButton:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 24px rgba(123, 47, 255, 0.5);
+}
+
+.savedMessage {
+  color: #00d4ff;
+  font-size: 14px;
+  font-weight: 500;
+  animation: fadeIn 0.3s ease forwards;
+}
+
+/* =====================
+   ANIMATIONS
+   ===================== */
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+@keyframes pulse {
+  0%, 100% { opacity: 0.6; transform: scale(1); }
+  50% { opacity: 1; transform: scale(1.05); }
+}
+
+/* =====================
+   RESPONSIVE
+   ===================== */
+@media (max-width: 640px) {
+  .hero {
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .movieTitle {
+    font-size: 2rem;
+    text-align: center;
+  }
+
+  .info {
+    align-items: center;
+    text-align: center;
+  }
+
+  .statusButtons {
+    justify-content: center;
+  }
+}

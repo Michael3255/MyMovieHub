@@ -1,14 +1,22 @@
 import { useState, useContext } from "react";
 import { AuthContext } from "../context/authContext";
+import styles from "./AddMovie.module.css";
 
 export default function AddMovie() {
   const [query, setQuery] = useState("");
   const [results, setResults] = useState([]);
-  const [message, setMessage] = useState("");
+  const [searching, setSearching] = useState(false);
+  const [addedIds, setAddedIds] = useState(new Set());
+  const [loadingId, setLoadingId] = useState(null);
   const { token } = useContext(AuthContext);
 
+  // Searches TMDB for movies matching the query
   async function handleSearch(e) {
-    e.preventDefault();
+    e.preventDefault();  // Prevents the browser from reloading the page when you submit a form
+    if (!query.trim()) return;  // If theres nothing in the search bar the function wont run
+
+    setSearching(true);
+    setResults([]);
 
     const response = await fetch(
       "http://127.0.0.1:8000/movies/search/?query=" + query,
@@ -20,10 +28,22 @@ export default function AddMovie() {
     );
 
     const data = await response.json();
-    setResults(data.results);
+
+    // Sort results by release year, newest first
+    const sorted = data.results.sort((a, b) => {
+      const yearA = parseInt(a.release_year) || 0;
+      const yearB = parseInt(b.release_year) || 0;
+      return yearB - yearA;
+    });
+
+    setResults(sorted);
+    setSearching(false);
   }
 
+  // Saves the movie to the database then adds it to the user's list
   async function handleAdd(movie) {
+    setLoadingId(movie.tmdb_id);
+
     const saveResponse = await fetch("http://127.0.0.1:8000/movies/save/", {
       method: "POST",
       headers: {
@@ -42,10 +62,7 @@ export default function AddMovie() {
 
     const savedMovie = await saveResponse.json();
 
-    // testing
-    console.log('savedMovie:', savedMovie);
-
-    const addResponse = await fetch("http://127.0.0.1:8000/user-movies/add/", {
+    await fetch("http://127.0.0.1:8000/user-movies/add/", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -57,68 +74,119 @@ export default function AddMovie() {
       }),
     });
 
-    const data = await addResponse.json();
-
-    // testing
-    console.log('addResponse data:', data);
-
-    if (data.id) {
-      setMessage(movie.title + " added to your list!");
-    } else {
-      setMessage("Something went wrong. Try again.");
-    }
+    // Mark this movie as added so the button updates
+    setAddedIds((prev) => new Set(prev).add(movie.tmdb_id));
+    setLoadingId(null);
   }
 
   return (
-    <div>
-      <h1>Search Movies</h1>
+    <div className={styles.page}>
 
-      {message && <p style={{ color: "green" }}>{message}</p>}
+      {/* Background orbs */}
+      <div className={styles.orb1} />
+      <div className={styles.orb2} />
+      <div className={styles.orb3} />
 
-      <form onSubmit={handleSearch}>
-        <input
-          type="text"
-          placeholder="Search for a movie..."
-          value={query}
-          onChange={(e) => setQuery(e.target.value)}
-        />
-        <button type="submit">Search</button>
-      </form>
+      <div className={styles.container}>
 
-      <div>
-        {results.map((movie) => (
-          <div key={movie.tmdb_id} style={styles.card}>
-            {movie.poster_url && (
-              <img
-                src={movie.poster_url}
-                alt={movie.title}
-                style={styles.poster}
-              />
-            )}
-            <div>
-              <h3>{movie.title}</h3>
-              <p>{movie.release_year}</p>
-              <p>{movie.description}</p>
-              <button onClick={() => handleAdd(movie)}>Add to My List</button>
+        {/* Page header */}
+        <div className={styles.header}>
+          <h1 className={styles.title}>Discover Movies</h1>
+          <p className={styles.subtitle}>Search the universe for your next watch</p>
+        </div>
+
+        {/* Search form */}
+        <form onSubmit={handleSearch} className={styles.searchForm}>
+          <div className={styles.searchWrapper}>
+            <span className={styles.searchIcon}>🔍</span>
+            <input
+              className={styles.searchInput}
+              type="text"
+              placeholder="Search for a movie..."
+              value={query}
+              onChange={(e) => setQuery(e.target.value)}
+            />
+          </div>
+          <button
+            type="submit"
+            className={searching ? styles.searchButtonLoading : styles.searchButton}
+            disabled={searching}
+          >
+            {searching ? "Searching..." : "Search"}
+          </button>
+        </form>
+
+        {/* Empty state before first search */}
+        {!searching && results.length === 0 && query === "" && (
+          <div className={styles.emptyState}>
+            <p className={styles.emptyText}>Search for a movie above to get started</p>
+          </div>
+        )}
+
+        {/* No results found */}
+        {!searching && results.length === 0 && query !== "" && (
+          <div className={styles.emptyState}>
+            <p className={styles.emptyText}>No results found for "{query}"</p>
+          </div>
+        )}
+
+        {/* Search results grid */}
+        {results.length > 0 && (
+          <div className={styles.results}>
+            <p className={styles.resultsCount}>{results.length} results found</p>
+
+            <div className={styles.grid}>
+              {results.map((movie) => (
+                <div key={movie.tmdb_id} className={styles.card}>
+
+                  {/* Movie poster */}
+                  {movie.poster_url ? (
+                    <img
+                      src={movie.poster_url}
+                      alt={movie.title}
+                      className={styles.poster}
+                    />
+                  ) : (
+                    <div className={styles.posterPlaceholder}>
+                      <span className={styles.posterPlaceholderIcon}>🎬</span>
+                    </div>
+                  )}
+
+                  {/* Movie info */}
+                  <div className={styles.info}>
+                    <h3 className={styles.movieTitle}>{movie.title}</h3>
+
+                    {movie.release_year && (
+                      <span className={styles.year}>{movie.release_year}</span>
+                    )}
+
+                    {movie.description && (
+                      <p className={styles.description}>{movie.description}</p>
+                    )}
+
+                    {/* Add button */}
+                    {addedIds.has(movie.tmdb_id) ? (
+                      <button className={styles.buttonAdded} disabled>
+                        Added to List
+                      </button>
+                    ) : (
+                      <button
+                        className={loadingId === movie.tmdb_id ? styles.buttonLoading : styles.button}
+                        onClick={() => handleAdd(movie)}
+                        disabled={loadingId === movie.tmdb_id}
+                      >
+                        {loadingId === movie.tmdb_id ? "Adding..." : "+ Add to My List"}
+                      </button>
+                    )}
+                  </div>
+
+                </div>
+              ))}
             </div>
           </div>
-        ))}
+        )}
+
       </div>
     </div>
   );
 }
-
-const styles = {
-  card: {
-    display: "flex",
-    gap: "20px",
-    marginBottom: "30px",
-    borderBottom: "1px solid #ccc",
-    paddingBottom: "20px",
-  },
-  poster: {
-    width: "100px",
-    height: "150px",
-    objectFit: "cover",
-  },
-};

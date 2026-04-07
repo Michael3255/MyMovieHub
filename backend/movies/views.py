@@ -92,6 +92,25 @@ def save_movie(request):
     serializer = MovieSerializer(movie)
     return Response(serializer.data)
 
+# Fetches the YouTube trailer key for a movie from TMDB
+@api_view(['GET'])
+@permission_classes([IsAuthenticated])
+def get_trailer(request, tmdb_id):
+    api_key = os.getenv('TMDB_API_KEY')
+    url = 'https://api.themoviedb.org/3/movie/' + str(tmdb_id) + '/videos'
+    params = {'api_key': api_key, 'language': 'en-US'}
+
+    tmdb_response = requests.get(url, params=params)
+    data = tmdb_response.json()
+
+    # Find the first YouTube trailer in the results
+    for video in data.get('results', []):
+        if video.get('site') == 'YouTube' and video.get('type') == 'Trailer':
+            return Response({'youtube_key': video.get('key')})
+
+    return Response({'youtube_key': None})
+
+
 # Gets movie recommendations from TasteDive based on the user's highest rated movie
 @api_view(['GET'])
 @permission_classes([IsAuthenticated])

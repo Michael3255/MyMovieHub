@@ -1,0 +1,269 @@
+/* =====================
+   PAGE LAYOUT
+   ===================== */
+.page {
+  min-height: 100vh;
+  padding: 40px 0 80px;
+  position: relative;
+  overflow-x: hidden;
+}
+
+/* =====================
+   BACKGROUND ORBS
+   ===================== */
+.orb1 {
+  position: fixed;
+  width: 500px;
+  height: 500px;
+  border-radius: 50%;
+  background: radial-gradient(circle, rgba(123, 47, 255, 0.12) 0%, transparent 70%);
+  top: -100px;
+  right: -100px;
+  animation: pulse 10s ease-in-out infinite;
+  pointer-events: none;
+}
+
+.orb2 {
+  position: fixed;
+  width: 400px;
+  height: 400px;
+  border-radius: 50%;
+  background: radial-gradient(circle, rgba(0, 212, 255, 0.08) 0%, transparent 70%);
+  bottom: 0;
+  left: -100px;
+  animation: pulse 14s ease-in-out infinite;
+  pointer-events: none;
+}
+
+/* =====================
+   CONTAINER
+   ===================== */
+.container {
+  max-width: 1300px;
+  margin: 0 auto;
+  padding: 0 40px;
+  position: relative;
+  z-index: 1;
+}
+
+/* =====================
+   PAGE HEADER
+   ===================== */
+.header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 48px;
+  animation: fadeInUp 0.5s ease forwards;
+}
+
+.title {
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: 3rem;
+  letter-spacing: 5px;
+  background: linear-gradient(135deg, #7b2fff, #00d4ff);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+.addButton {
+  padding: 10px 24px;
+  background: linear-gradient(135deg, #7b2fff, #ff2d7a);
+  color: white;
+  border-radius: 8px;
+  font-size: 14px;
+  font-weight: 600;
+  letter-spacing: 1px;
+  text-decoration: none;
+  box-shadow: 0 4px 16px rgba(123, 47, 255, 0.4);
+  transition: all 0.3s ease;
+}
+
+.addButton:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 24px rgba(123, 47, 255, 0.6);
+}
+
+/* =====================
+   EMPTY STATE
+   ===================== */
+.emptyState {
+  text-align: center;
+  padding: 100px 20px;
+}
+
+.emptyIcon {
+  font-size: 48px;
+  margin-bottom: 16px;
+}
+
+.emptyText {
+  color: #a0a8cc;
+  font-size: 18px;
+  margin-bottom: 12px;
+}
+
+.emptyLink {
+  color: #7b2fff;
+  font-size: 15px;
+  font-weight: 600;
+  text-decoration: none;
+  border-bottom: 1px solid rgba(123, 47, 255, 0.4);
+  padding-bottom: 2px;
+}
+
+/* =====================
+   ROW SECTIONS
+   ===================== */
+.section {
+  margin-bottom: 48px;
+  animation: fadeInUp 0.5s ease forwards;
+}
+
+.sectionHeader {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 20px;
+}
+
+.sectionTitle {
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: 1.6rem;
+  letter-spacing: 3px;
+  color: #00d4ff;
+}
+
+.sectionCount {
+  background: rgba(123, 47, 255, 0.2);
+  color: #7b2fff;
+  border: 1px solid rgba(123, 47, 255, 0.4);
+  border-radius: 20px;
+  padding: 2px 10px;
+  font-size: 12px;
+  font-weight: 600;
+}
+
+/* Horizontal scroll row — Netflix style */
+.row {
+  display: flex;
+  gap: 14px;
+  overflow-x: auto;
+  padding-bottom: 16px;
+  /* Hide scrollbar on most browsers */
+  scrollbar-width: thin;
+  scrollbar-color: rgba(123, 47, 255, 0.4) transparent;
+}
+
+.row::-webkit-scrollbar {
+  height: 4px;
+}
+
+.row::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+.row::-webkit-scrollbar-thumb {
+  background: rgba(123, 47, 255, 0.4);
+  border-radius: 2px;
+}
+
+/* =====================
+   RECOMMENDATIONS SECTION
+   ===================== */
+.recsSection {
+  margin-top: 16px;
+  padding-top: 40px;
+  border-top: 1px solid rgba(30, 30, 90, 0.8);
+  animation: fadeInUp 0.5s ease forwards;
+}
+
+.recsButton {
+  padding: 8px 20px;
+  background: transparent;
+  color: #00d4ff;
+  border: 1px solid #00d4ff;
+  border-radius: 8px;
+  font-size: 13px;
+  font-weight: 600;
+  letter-spacing: 0.5px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.recsButton:hover {
+  background: rgba(0, 212, 255, 0.1);
+  transform: translateY(-2px);
+}
+
+.recsButtonLoading {
+  padding: 8px 20px;
+  background: transparent;
+  color: #505080;
+  border: 1px solid #505080;
+  border-radius: 8px;
+  font-size: 13px;
+  font-weight: 600;
+  letter-spacing: 0.5px;
+  cursor: not-allowed;
+}
+
+.recsMessage {
+  color: #a0a8cc;
+  font-size: 14px;
+  margin: 16px 0;
+  font-style: italic;
+}
+
+.recsList {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  max-width: 600px;
+}
+
+.recItem {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 12px 16px;
+  background: rgba(13, 13, 53, 0.7);
+  border: 1px solid rgba(30, 30, 90, 0.8);
+  border-radius: 10px;
+  transition: all 0.3s ease;
+}
+
+.recItem:hover {
+  border-color: rgba(0, 212, 255, 0.3);
+  background: rgba(0, 212, 255, 0.05);
+}
+
+.recIcon {
+  font-size: 18px;
+}
+
+.recTitle {
+  color: #ffffff;
+  font-size: 15px;
+  font-weight: 500;
+}
+
+/* =====================
+   ANIMATIONS
+   ===================== */
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes pulse {
+  0%, 100% { opacity: 0.6; transform: scale(1); }
+  50% { opacity: 1; transform: scale(1.05); }
+}

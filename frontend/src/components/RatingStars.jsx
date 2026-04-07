@@ -1,24 +1,23 @@
-const RatingStars = ({ rating = 0, onRate, size = 'text-xl', editable = false }) => {
+// Displays 5 clickable stars for rating a movie
+// If editable is false the stars are display-only
+export default function RatingStars({ rating = 0, onRate, editable = false }) {
   return (
-    <div className="flex items-center gap-1">
-      {[...Array(5)].map((_, i) => {
-        const starValue = i + 1;
-        return (
-          <span
-            key={i}
-            onClick={() => editable && onRate?.(starValue)}
-            className={`${size} cursor-pointer transition-colors ${
-              starValue <= rating 
-                ? 'text-yellow-400' 
-                : 'text-gray-300 hover:text-yellow-300'
-            }`}
-          >
-            ★
-          </span>
-        );
-      })}
+    <div style={{ display: "flex", alignItems: "center", gap: "4px" }}>
+      {[1, 2, 3, 4, 5].map((star) => (
+        <span
+          key={star}
+          onClick={() => editable && onRate && onRate(star)}
+          style={{
+            fontSize: "20px",
+            color: star <= rating ? "#f5c518" : "#2a2a5a",
+            cursor: editable ? "pointer" : "default",
+            transition: "color 0.2s ease",
+            lineHeight: 1,
+          }}
+        >
+          ★
+        </span>
+      ))}
     </div>
   );
-};
-
-export default RatingStars;
+}

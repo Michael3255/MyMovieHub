@@ -1,0 +1,110 @@
+.card {
+  position: relative;
+  flex-shrink: 0;
+  width: 150px;
+  border-radius: 10px;
+  overflow: hidden;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  cursor: pointer;
+}
+
+.card:hover {
+  transform: scale(1.05);
+  box-shadow: 0 8px 30px rgba(123, 47, 255, 0.4);
+}
+
+/* Delete button hidden by default, shown on card hover */
+.deleteButton {
+  position: absolute;
+  top: 8px;
+  right: 8px;
+  width: 26px;
+  height: 26px;
+  background: rgba(255, 45, 122, 0.85);
+  color: white;
+  border: none;
+  border-radius: 50%;
+  font-size: 11px;
+  font-weight: 700;
+  cursor: pointer;
+  z-index: 10;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  opacity: 0;
+  transition: opacity 0.2s ease;
+}
+
+.card:hover .deleteButton {
+  opacity: 1;
+}
+
+.posterLink {
+  display: block;
+  position: relative;
+  text-decoration: none;
+  color: inherit;
+}
+
+.poster {
+  width: 150px;
+  height: 225px;
+  object-fit: cover;
+  display: block;
+}
+
+.posterPlaceholder {
+  width: 150px;
+  height: 225px;
+  background: rgba(13, 13, 53, 0.9);
+  border: 1px solid rgba(30, 30, 90, 0.8);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.placeholderIcon {
+  font-size: 36px;
+  opacity: 0.4;
+}
+
+/* Info overlay fades in on hover */
+.overlay {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  padding: 32px 10px 10px;
+  background: linear-gradient(to top, rgba(5, 5, 26, 0.95) 0%, transparent 100%);
+  opacity: 0;
+  transition: opacity 0.3s ease;
+}
+
+.card:hover .overlay {
+  opacity: 1;
+}
+
+.movieTitle {
+  font-size: 12px;
+  font-weight: 600;
+  color: #ffffff;
+  line-height: 1.3;
+  /* Clamp to 2 lines */
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  margin-bottom: 4px;
+}
+
+.year {
+  font-size: 11px;
+  color: #a0a8cc;
+}
+
+.rating {
+  font-size: 11px;
+  color: #f5c518;
+  letter-spacing: 1px;
+  margin-top: 2px;
+}
