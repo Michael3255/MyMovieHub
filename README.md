@@ -172,6 +172,12 @@ Visit `http://localhost:5173` in your browser, register an account, and start tr
 ### Stopping the app
 
 ```bash
+./stop.sh
+```
+
+Or alternatively:
+
+```bash
 docker compose down
 ```
 
