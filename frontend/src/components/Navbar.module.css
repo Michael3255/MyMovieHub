@@ -1,0 +1,83 @@
+.nav {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0 40px;
+  height: 68px;
+  background: rgba(5, 5, 26, 0.85);
+  backdrop-filter: blur(20px);
+  border-bottom: 1px solid rgba(123, 47, 255, 0.3);
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  box-shadow: 0 4px 30px rgba(123, 47, 255, 0.15);
+}
+
+.logo {
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: 1.8rem;
+  letter-spacing: 4px;
+  color: #ffffff;
+  text-decoration: none;
+}
+
+.logoAccent {
+  color: #7b2fff;
+  text-shadow: 0 0 20px rgba(123, 47, 255, 0.8);
+}
+
+.links {
+  display: flex;
+  align-items: center;
+  gap: 32px;
+}
+
+.link {
+  color: #a0a8cc;
+  text-decoration: none;
+  font-size: 15px;
+  font-weight: 500;
+  letter-spacing: 0.5px;
+  transition: color 0.3s ease;
+}
+
+.link:hover {
+  color: #ffffff;
+}
+
+.logoutButton {
+  background: transparent;
+  border: 1px solid #7b2fff;
+  color: #7b2fff;
+  padding: 8px 20px;
+  border-radius: 6px;
+  font-size: 14px;
+  font-weight: 600;
+  letter-spacing: 1px;
+  cursor: pointer;
+  box-shadow: 0 0 10px rgba(123, 47, 255, 0.3);
+  transition: all 0.3s ease;
+}
+
+.logoutButton:hover {
+  background: rgba(123, 47, 255, 0.1);
+  box-shadow: 0 0 20px rgba(123, 47, 255, 0.5);
+}
+
+.registerButton {
+  background: linear-gradient(135deg, #7b2fff, #ff2d7a);
+  color: white;
+  padding: 8px 20px;
+  border-radius: 6px;
+  font-size: 14px;
+  font-weight: 600;
+  letter-spacing: 1px;
+  text-decoration: none;
+  box-shadow: 0 0 15px rgba(123, 47, 255, 0.4);
+  transition: all 0.3s ease;
+}
+
+.registerButton:hover {
+  box-shadow: 0 0 25px rgba(123, 47, 255, 0.6);
+  transform: translateY(-2px);
+}
