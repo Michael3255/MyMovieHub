@@ -20,13 +20,6 @@ The goal of this project was to build a complete full-stack application from scr
 - **Recommendations** — Get personalized movie suggestions powered by the TasteDive API
 - **Galaxy UI** — Cinematic dark purple and blue theme with animations and glowing effects
 
----
-
-## Screenshots
-
-*Coming soon*
-
----
 
 ## Technologies Used
 
