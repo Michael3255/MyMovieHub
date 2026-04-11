@@ -1,6 +1,4 @@
 
-
-# Create your views here.
 from rest_framework.decorators import api_view, permission_classes
 from rest_framework.permissions import IsAuthenticated
 from rest_framework.response import Response
@@ -10,6 +8,7 @@ from movies.models import Movie
 
 #CRUD
 
+# Returns all movies in the logged in user's list
 @api_view(['GET'])
 @permission_classes([IsAuthenticated])
 def get_user_movies(request):
@@ -17,7 +16,7 @@ def get_user_movies(request):
     serializer = UserMovieSerializer(user_movies, many=True)
     return Response(serializer.data)
 
-
+# Adds a new movie to the logged in user's list
 @api_view(['POST'])
 @permission_classes([IsAuthenticated])
 def add_user_movie(request):
@@ -39,7 +38,7 @@ def add_user_movie(request):
     serializer = UserMovieSerializer(user_movie)
     return Response(serializer.data)
 
-
+# Updates the status, rating, and notes of an existing movie record
 @api_view(['PUT'])
 @permission_classes([IsAuthenticated])
 def update_user_movie(request, pk):
@@ -54,7 +53,7 @@ def update_user_movie(request, pk):
     serializer = UserMovieSerializer(user_movie)
     return Response(serializer.data)
 
-
+# Removes a movie from the logged in user's list
 @api_view(['DELETE'])
 @permission_classes([IsAuthenticated])
 def delete_user_movie(request, pk):
