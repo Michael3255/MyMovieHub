@@ -58,25 +58,21 @@ The goal of this project was to build a complete full-stack application from scr
 ---
 
 ## Entity Relationship Diagram
-User (Django built-in)          Movie
-─────────────────────           ──────────────────────
-id (PK)                         id (PK)
-username                        tmdb_id
-email                           title
-password                        release_year
-genres
-poster_url
-description
-            UserMovie
-            ──────────────────────
-            id (PK)
-            user_id (FK → User)
-            movie_id (FK → Movie)
-            status
-            rating
-            notes
-            created_at
-            updated_at
+
+```
+┌─────────────────┐         ┌─────────────────────┐         ┌──────────────────┐
+│      User       │         │     UserMovie        │         │      Movie       │
+│─────────────────│         │─────────────────────│         │──────────────────│
+│ id (PK)         │──────── │ id (PK)             │──────── │ id (PK)          │
+│ username        │         │ user_id (FK → User) │         │ tmdb_id          │
+│ email           │         │ movie_id (FK →Movie)│         │ title            │
+│ password        │         │ status              │         │ release_year     │
+└─────────────────┘         │ rating              │         │ genres           │
+                            │ notes               │         │ poster_url       │
+                            │ created_at          │         │ description      │
+                            │ updated_at          │         └──────────────────┘
+                            └─────────────────────┘
+```
 
 ### Relationships
 - A **User** can have many **UserMovies**
@@ -86,22 +82,26 @@ description
 ---
 
 ## Project Structure
-personal-project-MyMovieHub/
-backend/
-mymoviehub/         → Django project settings and main URLs
-movies/             → Movie model, TMDB search, save, recommendations, trailer
-user_movies/        → UserMovie model and CRUD endpoints
-auth_api/           → Register, login, logout endpoints
-manage.py
-requirements.txt
-frontend/
-src/
-components/     → Navbar, MovieCard, RatingStars
-context/        → Auth context
-pages/          → Login, Register, Dashboard, AddMovie, MovieDetails
-index.css           → Global galaxy theme
 
----
+```
+personal-project-MyMovieHub/
+├── backend/
+│   ├── mymoviehub/        → Django project settings and main URLs
+│   ├── movies/            → Movie model, TMDB search, save, recommendations, trailer
+│   ├── user_movies/       → UserMovie model and CRUD endpoints
+│   ├── auth_api/          → Register, login, logout endpoints
+│   ├── manage.py
+│   └── requirements.txt
+├── frontend/
+│   └── src/
+│       ├── components/    → Navbar, MovieCard, RatingStars
+│       ├── context/       → Auth context
+│       ├── pages/         → Login, Register, Dashboard, AddMovie, MovieDetails
+│       └── index.css      → Global galaxy theme
+├── start.sh
+├── stop.sh
+└── docker-compose.yml
+```
 
 ## API Endpoints
 
