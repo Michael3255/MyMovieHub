@@ -6,21 +6,20 @@ backend/*.pyc
 backend/.env
 backend/mymoviehub/__pycache__/
 backend/movies/__pycache__/
+.env
+.env.local
 
 # Frontend
 frontend/node_modules/
 frontend/dist/
 frontend/.vite/
 frontend/build/
+CLAUDE.md
 
 # General
-.env
-.env.local
 .DS_Store
 *.log
 __pycache__/
 *.pyc
 .vscode/
 .idea/
-
-CLAUDE.md

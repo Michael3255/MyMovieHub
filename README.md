@@ -20,13 +20,6 @@ The goal of this project was to build a complete full-stack application from scr
 - **Recommendations** — Get personalized movie suggestions powered by the TasteDive API
 - **Galaxy UI** — Cinematic dark purple and blue theme with animations and glowing effects
 
----
-
-## Screenshots
-
-*Coming soon*
-
----
 
 ## Technologies Used
 
@@ -125,8 +118,7 @@ personal-project-MyMovieHub/
 ## Setup and Installation
 
 ### Prerequisites
-- Python 3.10+
-- Node.js 18+
+- [Docker Desktop](https://www.docker.com/products/docker-desktop) installed and running
 - Git
 
 > The `.env` file is included in this repository for presentation purposes.
@@ -140,55 +132,47 @@ personal-project-MyMovieHub/
 git clone https://github.com/Michael3255/MyMovieHub.git
 cd MyMovieHub
 ```
----
-
-
-
-### 2. Make the run scripts executable
-
-```bash
-chmod +x start-backend.sh
-chmod +x start-frontend.sh
-```
 
 ---
 
-### 3. Create your virtual environment
+### 2. Start the app
 
 ```bash
-cd backend
-python -m venv venv
-source venv/bin/activate
+./start.sh
 ```
 
-
-### 4. Run the app
+Or alternatively:
 
 ```bash
-Open two terminals:
-
-Terminal 1:
-./start-backend.sh
-
-Terminal 2:
-./start-frontend.sh
+docker compose up --build
 ```
 
 This will automatically:
-- Activate the Python virtual environment
-- Install all backend dependencies
+- Build the backend and frontend containers
+- Install all dependencies
 - Run database migrations
 - Start the Django backend at `http://127.0.0.1:8000`
-- Install all frontend dependencies
 - Start the React frontend at `http://localhost:5173`
 
 ---
 
-### 5. Open the app
+### 3. Open the app
 
 Visit `http://localhost:5173` in your browser, register an account, and start tracking movies.
 
 ---
+
+### Stopping the app
+
+```bash
+./stop.sh
+```
+
+Or alternatively:
+
+```bash
+docker compose down
+```
 
 ## What I Learned
 
