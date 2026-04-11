@@ -2,16 +2,20 @@
 
 echo "Starting MyMovieHub..."
 
-# Start the Django backend
-echo "Starting backend..."
-cd backend
+# Get the root directory of the project
+ROOT_DIR=$(pwd)
+
+# Set up and start the Django backend
+echo "Setting up backend..."
+cd "$ROOT_DIR/backend"
 source venv/bin/activate
+pip install -r requirements.txt
 python manage.py migrate
 python manage.py runserver &
 
-# Go back to root and start the React frontend
-echo "Starting frontend..."
-cd ../frontend
+# Set up and start the React frontend
+echo "Setting up frontend..."
+cd "$ROOT_DIR/frontend"
 npm install
 npm run dev &
 
@@ -20,6 +24,6 @@ echo "MyMovieHub is running!"
 echo "Frontend: http://localhost:5173"
 echo "Backend:  http://127.0.0.1:8000"
 echo ""
+echo "Press Ctrl+C to stop both servers"
 
-# Wait so both servers keep running
 wait
